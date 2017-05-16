@@ -1,0 +1,19 @@
+{
+  "name": "blog_api",
+  "version": "1.0.0",
+  "description": "build crud api",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "luisa salcedo",
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/lecatalyser/blog_api"
+  },
+  "dependencies": {
+    "express": "^4.15.2",
+    "morgan": "^1.8.1"
+  }
+}
