@@ -22,13 +22,14 @@ const blogPosts ={
 		if (id !== null) {
 			return this. posts.find(post => post.id === id);
 		}
+		return this.posts.sort(function(a,b){
 		return b.publishDate - a.publishDate
 	});
 },
 delete: function(id) {
 	const postIndex= this.posts.findIndex(
 		post => post.id ===id);
-	if (postIndex .-1) {
+	if (postIndex > -1) {
 		this.posts.splice(postIndex, 1);
 	}
 },
@@ -53,4 +54,4 @@ function createBlogPostModel() {
 	return storage ;
 }
 
-module.exports = {BlogPosts : createBlogPostModel()};
+module.exports = {blogposts : createBlogPostModel()};

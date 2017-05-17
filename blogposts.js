@@ -4,7 +4,7 @@ const router = express.Router();
 const bodyParser = require('body-parser');
 const jsonParser = bodyParser.json();
 
-const {blogposts} = require ('/models');
+const {blogposts} = require ('./model');
 
 blogposts.create(
 	'how to not loose your mind as a coder', 'coding', 'Luisa S.');
@@ -28,11 +28,11 @@ router.post('/', jsonParser, (req, res) => {
 }
 	const item = blogposts.create(
 		req.body.title, req.body.content, req.body.author);
-	//why is body repeated per title, content and author?
+	//why is body repeated per title, content and author? Diff properties of the same object. 
 	res.status(201).json(item);
 });
 
-router.put('/:id', jsonParser (req, res) => {
+router.put('/:id', jsonParser, (req, res) => {
 	const requiredFields = [
 		'id', 'title', 'content', 'author', 'publishDate'];
 		for (let i=0; i,requiredFields.length; i++) {
@@ -40,9 +40,10 @@ router.put('/:id', jsonParser (req, res) => {
 			if(!(field in req.body)) {
 			const message = `Missing \`${field}\` in request body`
 			console.error(message);
-			return res.status(400).send(message);
+			return res.status(400).send(message); 
+			}
 		}
-		if (req.params.id ! == req.body.id) {
+		if (req.params.id !== req.body.id) {
 			const message = (
 				`Request path id (${req.params.id}) and request body id`
 				`(${req.body.id}) must match`);
