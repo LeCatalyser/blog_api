@@ -16,6 +16,39 @@ describe("blog", function() {
     return closeServer();
   });
 
+  it("should add an item on POST", function() {
+    const newPost = {
+      title: "try again",
+      content: "how to persevere when discouraged",
+      author: { firstName: "Luisa", lastName: "Salcedo" }
+    };
+    const expectedKeys = ["id", "created"].concat(Object.keys(newPost));
+
+    return chai
+      .request(app)
+      .post("/blog-posts")
+      .send(newPost)
+      .then(function(res) {
+        res.should.have.status(201);
+        res.should.be.json;
+        res.body.should.have.all.keys(expectedKeys);
+        res.body.title.should.eql(newPost.title);
+        res.body.content.should.eql(newPost.content);
+        res.body.author.should.eql("Luisa Salcedo"); //fix line to check first and last name
+      });
+  });
+
+  it("should error if POST missing expected values", function() {
+    const badRequestData = {};
+    return chai
+      .request(app)
+      .post("/blog-posts")
+      .send(badRequestData)
+      .catch(function(res) {
+        res.should.have.status(400);
+      });
+  });
+
   it("should lit items on GET", function() {
     return chai.request(app).get("/blog-posts").then(function(res) {
       res.should.have.status(200);
@@ -30,43 +63,10 @@ describe("blog", function() {
           "title",
           "content",
           "author",
-          "publishDate"
+          "created"
         );
       });
     });
-  });
-
-  it("should add an item on POST", function() {
-    const newPost = {
-      title: "try again",
-      content: "how to persevere when discouraged",
-      author: "Luisa Salcedo"
-    };
-    const expectedKeys = ["id", "publishDate"].concat(Object.keys(newPost));
-
-    return chai
-      .request(app)
-      .post("/blog-posts")
-      .send(newPost)
-      .then(function(res) {
-        res.should.have.status(201);
-        res.should.be.json;
-        res.body.should.have.all.keys(expectedKeys);
-        res.body.title.should.equal(newPost.title);
-        res.body.content.should.equal(newPost.content);
-        res.body.author.should.equal(newPost.author);
-      });
-  });
-
-  it("should error if POST missing expected values", function() {
-    const badRequestData = {};
-    return chai
-      .request(app)
-      .post("/blog-posts")
-      .send(badRequestData)
-      .catch(function(res) {
-        res.should.have.status(400);
-      });
   });
 
   it("should update blog posts on PUT", function() {
