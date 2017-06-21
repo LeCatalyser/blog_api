@@ -1,7 +1,7 @@
+const bodyParser = require("body-parser"); //about express, CRUD operations for blogposts.
 const express = require("express");
 const router = express.Router();
 
-const bodyParser = require("body-parser");
 const jsonParser = bodyParser.json();
 
 const { blogposts } = require("./model");
@@ -59,6 +59,8 @@ router.put("/:id", jsonParser, (req, res) => {
   });
   res.status(204).json(updatedItem);
 });
+
+//repalce logic from something from mongoose.
 
 router.delete("/:id", (req, res) => {
   blogposts.delete(req.params.id);
