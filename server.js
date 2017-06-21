@@ -14,9 +14,6 @@ app.use(morgan("dev"));
 //app.use(morgan "common"));
 app.use(bodyParser.json());
 
-const BlogPosts = require("./blogposts");//review this with Eli. 
-
-
 app.use("/blog-posts", BlogPosts);//review if correct
 
 app.get('/posts', (req, res) => {
