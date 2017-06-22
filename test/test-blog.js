@@ -80,7 +80,7 @@ describe("blog", function() {
         .put(`/blog-posts/${res.body[0].id}`)
         .send(updatedPost)
         .then(function(res) {
-          res.should.have.status(204);
+          res.should.have.status(201);
         });
     });
   });

@@ -60,8 +60,7 @@ app.post("/blog-posts", (req, res) => {
 });
 
 app.delete("/blog-posts/:id", (req, res) => {
-  //two deletes?
-  BlogPost.findByIdAndRemove(req.params.id)
+  BlogPosts.findByIdAndRemove(req.params.id)
     .exec()
     .then(() => {
       res.status(204).json({ message: "success" });
@@ -74,7 +73,7 @@ app.delete("/blog-posts/:id", (req, res) => {
 
 app.put("/blog-posts/:id", (req, res) => {
   if (!(req.params.id && req.body.id && req.params.id === req.body.id)) {
-    res.status(400).json({
+    res.status(201).json({
       error: "Request path id and request body id values must match"
     });
   }
@@ -87,7 +86,7 @@ app.put("/blog-posts/:id", (req, res) => {
     }
   });
 
-  BlogPost.findByIdAndUpdate(req.params.id, { $set: updated }, { new: true })
+  BlogPosts.findByIdAndUpdate(req.params.id, { $set: updated }, { new: true })
     .exec()
     .then(updatedPost => res.status(201).json(updatedPost.apiRepr()))
     .catch(err => res.status(500).json({ message: "Something went wrong" }));
